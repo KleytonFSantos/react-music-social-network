@@ -62,7 +62,6 @@ export const useUser = () => {
         setSongs(response.data.songs);
         setDescription(response.data.description);
         dispatch({ type: "GET_USER", payload: response.data });
-        console.log("response", response);
         setIsLoading(false);
       })
       .catch((err) => {

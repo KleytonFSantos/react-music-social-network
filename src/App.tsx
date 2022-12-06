@@ -7,6 +7,7 @@ import { ForgetPassword } from "./pages/ForgetPassword";
 import { EditProfile } from "./pages/EditProfile";
 import { PrivateRoute } from "./components/PrivateRoute";
 import { PublicRoute } from "./components/PublicRoute";
+import { AddSong } from "./pages/AddSong";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <Route path="/" element={<PrivateRoute />}>
         <Route path="/profile" element={<Profile />} />
         <Route path="/edit-profile" element={<EditProfile />} />
+        <Route path="/add-song" element={<AddSong />} />
       </Route>
 
       <Route path="/" element={<PublicRoute />}>

@@ -15,7 +15,6 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
     const { email }: any = useUser()
     useEffect(() => {
         const userStorage = localStorage.getItem('user')!
-        console.log('userStorage', userStorage === email)
         if ( email === userStorage ) {
             dispatch({ type: 'LOGIN', payload: email })
         } else {
@@ -25,7 +24,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
         }
     }, [email])
 
-    console.log('AuthContext state: ', state)
+    // console.log('AuthContext state: ', state)
     return (
         <AuthContext.Provider value={{...state, dispatch}}>
             {children}

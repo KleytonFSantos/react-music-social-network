@@ -8,6 +8,8 @@ import { FileInput } from "../components/global/FileInput";
 import { useEditProfile } from "../hooks/useEditProfile";
 import { LoadingComponent } from "../components/global/LoadingComponent";
 import { useUser } from "../hooks/useUserContext";
+import { ButtonLink } from "../components/global/ButtonLink";
+import { Link } from "react-router-dom";
 
 export const EditProfile = (): JSX.Element => {
   const [firstName, setFirstName] = useState("");
@@ -50,6 +52,25 @@ export const EditProfile = (): JSX.Element => {
       <Navbar />
       <form onSubmit={handleEditProfile}>
         <div className="container max-w-4xl mx-auto pt-20 pb-20 px-6">
+          <div className="flex mb-6 w-full justify-end">
+            <Link
+              to="/profile"
+              className="
+              px-4 py-2 
+              tracking-wide 
+              text-white 
+              transition-colors 
+              duration-200 
+              transform 
+              bg-red-700 
+              rounded-md 
+              hover:bg-red-600 
+              focus:outline-none 
+              focus:bg-red-600"
+            >
+              {"< "}Back
+            </Link>
+          </div>
           <div className="text-gray-900 text-xl"> Edit Profile </div>
           <div className="bg-blue-700 w-full h-1"></div>
 

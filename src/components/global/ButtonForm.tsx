@@ -1,10 +1,16 @@
-type Props = {
-    BtnText:string
-}
+import { MouseEventHandler } from "react";
 
-export const ButtonForm = ({ BtnText }: Props): JSX.Element => {
+type Props = {
+  BtnText: string;
+  type?: "button" | "submit" | "reset" | undefined;
+  onClick?: MouseEventHandler<HTMLButtonElement> | undefined;
+};
+
+export const ButtonForm = ({ BtnText, type, onClick }: Props): JSX.Element => {
   return (
     <button
+      onClick={onClick}
+      type={type}
       className="
         w-full 
         px-4 py-2 
@@ -17,8 +23,9 @@ export const ButtonForm = ({ BtnText }: Props): JSX.Element => {
         rounded-md 
         hover:bg-blue-600 
         focus:outline-none 
-        focus:bg-blue-600">
-      { BtnText }
+        focus:bg-blue-600"
+    >
+      {BtnText}
     </button>
   );
 };
