@@ -7,6 +7,7 @@ import { Navbar } from "../components/partials/Hero/Navbar";
 import { FileInput } from "../components/global/FileInput";
 import { useEditProfile } from "../hooks/useEditProfile";
 import { LoadingComponent } from "../components/global/LoadingComponent";
+import { useUser } from "../hooks/useUserContext";
 
 export const EditProfile = (): JSX.Element => {
   const [firstName, setFirstName] = useState("");
@@ -17,6 +18,7 @@ export const EditProfile = (): JSX.Element => {
   const [description, setDescription] = useState("");
 
   const { editProfile, error, isLoading } = useEditProfile();
+  const user = useUser();
 
   const handleEditProfile = async () => {
     editProfile({
@@ -29,10 +31,6 @@ export const EditProfile = (): JSX.Element => {
     });
   };
 
-  if (isLoading) {
-    return <LoadingComponent />;
-  }
-
   const onSelectFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       const reader = new FileReader();
@@ -42,6 +40,10 @@ export const EditProfile = (): JSX.Element => {
       reader.readAsDataURL(e.target.files[0]);
     }
   };
+
+  if (isLoading) {
+    return <LoadingComponent />;
+  }
 
   return (
     <>
@@ -54,6 +56,7 @@ export const EditProfile = (): JSX.Element => {
           <div className="flex flex-wrap mt-4 mb-6">
             <div className="w-full md:w-1/2 px-3">
               <InputForm
+                placeholder={user.firstName}
                 htmlFor="First Name"
                 label="First Name"
                 type="text"
@@ -63,6 +66,7 @@ export const EditProfile = (): JSX.Element => {
             </div>
             <div className="w-full md:w-1/2 px-3">
               <InputForm
+                placeholder={user.lastName}
                 htmlFor="Last Name"
                 label="Last Name"
                 type="text"
@@ -74,6 +78,7 @@ export const EditProfile = (): JSX.Element => {
           <div className="flex flex-wrap mt-4 mb-6">
             <div className="w-full md:w-1/2 px-3">
               <InputForm
+                placeholder={user.city}
                 htmlFor="City"
                 label="City"
                 type="text"
@@ -83,6 +88,7 @@ export const EditProfile = (): JSX.Element => {
             </div>
             <div className="w-full md:w-1/2 px-3">
               <InputForm
+                placeholder={user.state}
                 error={error ?? ""}
                 htmlFor="State"
                 label="State"
@@ -103,6 +109,12 @@ export const EditProfile = (): JSX.Element => {
             <div className="w-full md:w-1/2 px-3">
               {profileImage && (
                 <SelectedImage label="Selected Image" image={profileImage} />
+              )}
+              {!profileImage && user.profileImage && (
+                <SelectedImage
+                  label="Selected Image"
+                  image={user.profileImage as string}
+                />
               )}
             </div>
           </div>
