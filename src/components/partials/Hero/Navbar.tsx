@@ -6,10 +6,9 @@ import { LoadingComponent } from "../../global/LoadingComponent";
 
 export const Navbar = (): JSX.Element => {
   const [navbar, setNavbar] = useState(false);
-
-  const { user }: string | any = useAuthContext()
   const { logout, isLoading, error } = useLogout()
-
+  const user = localStorage.getItem('user')!
+  
   const handleLogoutButton = async () => {
     await logout();
   }

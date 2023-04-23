@@ -53,10 +53,10 @@ export const useUser = () => {
     await axios
       .get(`${baseUrl}/get-user`, config)
       .then((response) => {
-        setEmail(response.data.email);
-        setFirstName(response.data.first_name);
-        setLastName(response.data.last_name);
-        setProfileImage(response.data.profile_image);
+        setEmail(response.data.user.email);
+        setFirstName(response.data.user.firstName);
+        setLastName(response.data.user.lastName);
+        setProfileImage(response.data.avatar);
         setCity(response.data.city);
         setState(response.data.state);
         setSongs(response.data.songs);

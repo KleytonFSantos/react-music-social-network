@@ -22,12 +22,13 @@ export const useSignin = () => {
     setError(null);
 
     await axios
-      .post(`${baseUrl}/login`, {
-        email,
+      .post(`${baseUrl}/login_check`, {
+        username: email,
         password,
       })
       .then((response) => {
-        localStorage.setItem("user", response.data.user.email);
+        console.log(response);
+        localStorage.setItem("user", response.data.email);
         localStorage.setItem("token", response.data.token);
         navigate('/profile')
 
@@ -36,7 +37,7 @@ export const useSignin = () => {
       })
       .catch((err) => {
         setIsLoading(false);
-        setError(err.response.data.message);
+        setError(err.data?.message);
       });
   };
 

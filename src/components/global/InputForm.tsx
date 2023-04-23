@@ -4,8 +4,8 @@ type Props = {
   htmlFor: string;
   label: string;
   type: string;
-  error: string;
-  placeholder: any;
+  error?: string;
+  placeholder?: any;
   onChange: (e: React.FormEvent<HTMLInputElement>) => void;
 };
 

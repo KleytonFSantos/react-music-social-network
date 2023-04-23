@@ -8,7 +8,6 @@ import { FileInput } from "../components/global/FileInput";
 import { useEditProfile } from "../hooks/useEditProfile";
 import { LoadingComponent } from "../components/global/LoadingComponent";
 import { useUser } from "../hooks/useUserContext";
-import { ButtonLink } from "../components/global/ButtonLink";
 import { Link } from "react-router-dom";
 
 export const EditProfile = (): JSX.Element => {
@@ -17,6 +16,7 @@ export const EditProfile = (): JSX.Element => {
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [profileImage, setProfileImage] = useState("");
+  const [preImage, setPreImage] = useState("");
   const [description, setDescription] = useState("");
 
   const { editProfile, error, isLoading } = useEditProfile();
@@ -37,8 +37,11 @@ export const EditProfile = (): JSX.Element => {
     if (e.target.files && e.target.files.length > 0) {
       const reader = new FileReader();
       reader.addEventListener("load", () =>
-        setProfileImage(reader.result?.toString() || "")
+        setPreImage(reader.result?.toString() || "")
       );
+      const file = e.target.files[0];
+      console.log(file);
+      setProfileImage(file as any);
       reader.readAsDataURL(e.target.files[0]);
     }
   };
@@ -128,8 +131,8 @@ export const EditProfile = (): JSX.Element => {
           </div>
           <div className="flex flex-wrap mt-4 mb-6">
             <div className="w-full md:w-1/2 px-3">
-              {profileImage && (
-                <SelectedImage label="Selected Image" image={profileImage} />
+              {preImage && (
+                <SelectedImage label="Selected Image" image={preImage} />
               )}
               {!profileImage && user.profileImage && (
                 <SelectedImage

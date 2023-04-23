@@ -37,15 +37,14 @@ export const useSignup = () => {
       password,
       password_confirmation: confirmPassword,
     }).then((response) => {
-      localStorage.setItem('user', response.data.user.email)
-      localStorage.setItem('token', response.data.token)
-      navigate('/profile')
+      console.log(response);
+      navigate('/login')
       
-      dispatch({ type: 'REGISTER', payload: response.data.user.email })
+      dispatch({ type: 'REGISTER', payload: response.data.user })
       setIsLoading(false);
     }).catch((err) => {
       setIsLoading(false);
-      setError(err.response.data.message)
+      setError(err.response.data.error)
     });
 
   };

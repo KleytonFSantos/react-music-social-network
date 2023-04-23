@@ -43,6 +43,15 @@ export const useEditProfile = () => {
   }: EditProfileProps) => {
     setIsLoading(true);
     setError(null);
+    
+    const formData = new FormData();
+    
+    formData.append('first_name', firstName);
+    formData.append('last_name', lastName);
+    formData.append('avatar', profileImage);
+    formData.append('description', description);
+    formData.append('city', city);
+    formData.append('state', state);
 
     const token = localStorage.getItem("token");
 
@@ -54,14 +63,7 @@ export const useEditProfile = () => {
     await axios
       .post(
         `${baseUrl}/edit-profile`,
-        {
-          first_name: firstName,
-          last_name: lastName,
-          profile_image: profileImage,
-          description,
-          city,
-          state,
-        },
+        formData,
         config
       )
       .then((response) => {

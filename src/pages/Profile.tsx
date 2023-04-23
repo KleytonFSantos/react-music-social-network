@@ -6,9 +6,8 @@ import { ProfileSongSection } from "../components/partials/Profile/ProfileSongSe
 import { useUser } from "../hooks/useUserContext";
 
 export const Profile = (): JSX.Element => {
-
+  const baseUrl: string = import.meta.env.VITE_APP_API_URL;
   const { firstName, profileImage, lastName, city, state, songs, description } = useUser();
-
 
   return (
     <>
@@ -19,7 +18,7 @@ export const Profile = (): JSX.Element => {
             v-if="userStore"
             className="lg:w-full h-64 rounded-lg shadow-lg"
             alt="Profile Pic"
-            src={ profileImage }
+            src={ baseUrl + '/' + profileImage ?? 'public/login-bg.jpg' }
           />
         </div>
         <div className="w-full pl-4">
@@ -30,7 +29,7 @@ export const Profile = (): JSX.Element => {
               </h1>
               <span className="text-md text-gray-700 mt-2">
                 <i>
-                  <b>{ city + ', ' + state}</b>
+                  <b>{city ? city + ', ' + state : ''}</b>
                 </i>
               </span>
             </div>
@@ -41,7 +40,7 @@ export const Profile = (): JSX.Element => {
           <ProfileAboutSection 
             description={ description }
           />
-          <ProfileInfoSection songs={ songs }/>
+          <ProfileInfoSection songs={ songs ?? 'Add your first' }/>
         </div>
       </div>
       <ProfileSongSection />

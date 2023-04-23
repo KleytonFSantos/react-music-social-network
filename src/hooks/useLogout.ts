@@ -18,7 +18,7 @@ export const useLogout = () => {
     setIsLoading(true);
     setError(null);
     const token = localStorage.getItem('token');
-        
+    console.log(token);  
     const config = {
         headers:{
           Authorization: `Bearer ${token}`,
