@@ -3,7 +3,7 @@ import { ReactNode, useCallback, useContext, useEffect, useState } from "react";
 import { UserContext } from "../contexts/UserContext";
 
 type UserProps = {
-  user_id: number;
+  userId: number;
   email: string;
   lastName: string;
   profile_image: string;
@@ -30,6 +30,7 @@ const baseUrl: string = import.meta.env.VITE_APP_API_URL;
 export const useUser = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [userId, setUserId] = useState<ReactNode>(null);
   const [email, setEmail] = useState<ReactNode>(null);
   const [firstName, setFirstName] = useState<ReactNode>(null);
   const [lastName, setLastName] = useState<ReactNode>(null);
@@ -53,6 +54,7 @@ export const useUser = () => {
     await axios
       .get(`${baseUrl}/get-user`, config)
       .then((response) => {
+        setUserId(response.data.user.id);
         setEmail(response.data.user.email);
         setFirstName(response.data.user.firstName);
         setLastName(response.data.user.lastName);
@@ -78,6 +80,7 @@ export const useUser = () => {
 
   return {
     getUser,
+    userId,
     email,
     firstName,
     lastName,

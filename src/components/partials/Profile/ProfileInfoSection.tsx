@@ -1,7 +1,5 @@
-import { ReactNode } from "react";
-
 type Props = {
-  songs: ReactNode
+  songs: number
 }
 
 export const ProfileInfoSection = ({ songs }: Props): JSX.Element => {
@@ -20,7 +18,7 @@ export const ProfileInfoSection = ({ songs }: Props): JSX.Element => {
         py-1
         "
     >
-      { songs!  > 1  ? songs + " Songs" : songs + " Song" }
+      { songs  > 1  ? songs + " Songs" : songs + " Song" }
     </div>
   );
 };

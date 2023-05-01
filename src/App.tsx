@@ -8,6 +8,7 @@ import { EditProfile } from "./pages/EditProfile";
 import { PrivateRoute } from "./components/PrivateRoute";
 import { PublicRoute } from "./components/PublicRoute";
 import { AddSong } from "./pages/AddSong";
+import { DeleteSong } from "./pages/DeleteSong";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/edit-profile" element={<EditProfile />} />
         <Route path="/add-song" element={<AddSong />} />
+        <Route path="/delete-song" element={<DeleteSong />} />
       </Route>
 
       <Route path="/" element={<PublicRoute />}>

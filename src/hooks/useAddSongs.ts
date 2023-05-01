@@ -1,18 +1,19 @@
 import axios from "axios";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 type addSongsProps = {
   title: string;
   artist: string;
-  coverImage: string;
+  coverImage?: string;
+  uploadImage: string;
   songFile: File | undefined;
 };
 
 const baseUrl: string = import.meta.env.VITE_APP_API_URL;
 
 export const useAddSong = () => {
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | ReactNode>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
@@ -20,8 +21,8 @@ export const useAddSong = () => {
   const addSong = async ({
     title,
     artist,
-    coverImage,
     songFile,
+    uploadImage
   }: addSongsProps) => {
     setIsLoading(true);
     setError(null);
@@ -31,15 +32,13 @@ export const useAddSong = () => {
     const config = {
       headers: {
           Authorization: `Bearer ${token}`,
-          ContentType: "multipart/form-data",
-          "Access-Control-Allow-Origin": "*",
       },
     };
 
     const payload = new FormData() as any;
     payload.append('title', title)
     payload.append('artist', artist)
-    payload.append('coverImage', coverImage)
+    payload.append('coverImage', uploadImage)
     payload.append('song', songFile)
     console.log('songFile', songFile)
     await axios
@@ -49,15 +48,13 @@ export const useAddSong = () => {
         config
       )
       .then((response) => {
-        console.log(response);
         navigate("/profile");
 
         setIsLoading(false);
       })
       .catch((err) => {
         setIsLoading(false);
-        console.log('erroAddSong', err);
-        setError(err.response.data.message)
+        setError('Ocorreu um erro inesperado');
       });
   };
 

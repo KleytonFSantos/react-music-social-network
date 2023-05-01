@@ -13,40 +13,52 @@ export const AddSong = (): JSX.Element => {
   const [title, setTitle] = useState("");
   const [artist, setArtist] = useState("");
   const [coverImage, setCoverImage] = useState("");
+  const [uploadImage, setUploadImage] = useState("");
   const [songFile, setSongFile] = useState<File>();
   const user = useUser();
   const { addSong, isLoading, error } = useAddSong();
 
   const onSelectFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
-      const reader = new FileReader();
-      reader.addEventListener("load", () =>
-        setCoverImage(reader.result?.toString() || "")
-      );
-      reader.readAsDataURL(e.target.files[0]);
+      const file = e.target.files[0];
+      if (file.type.startsWith("image/")) {
+        const reader = new FileReader();
+        reader.addEventListener("load", () =>
+          setCoverImage(reader.result?.toString() || "")
+        );
+        setUploadImage(file as any);
+        reader.readAsDataURL(e.target.files[0]);
+      } else {
+        alert("Por favor, selecione um arquivo de imagem válido.");
+        
+      }
     }
   };
 
   const getUploadedSong = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
-      setSongFile(e.target?.files[0]);
+      const file = e.target.files[0]
+      if(file.type.startsWith('audio/')) {
+        setSongFile(e.target?.files[0]);
+      } else {
+        alert("Por favor, selecione um arquivo de audio válido.");
+      }
     }
   };
 
   const handleAddSong = async () => {
-
-        await addSong({
-            artist,
-            coverImage,
-            title,
-            songFile
-        });
-  } 
+    await addSong({
+      artist,
+      uploadImage,
+      title,
+      songFile,
+    });
+  };
 
   if (isLoading) {
     return <LoadingComponent />;
   }
-
+  
   return (
     <>
       <Navbar />
@@ -71,9 +83,13 @@ export const AddSong = (): JSX.Element => {
               {"< "}Back
             </Link>
           </div>
-          <div className="text-gray-900 text-xl"> Edit Profile </div>
+          <div className="text-gray-900 text-xl"> Add Song </div>
           <div className="bg-blue-700 w-full h-1"></div>
-
+          {error && (
+            <div className="text-red-500 font-bold">
+              Ocorreu um erro inesperado!
+            </div>
+          )}
           <div className="flex flex-wrap mt-4 mb-6">
             <div className="w-full px-3">
               <InputForm
@@ -81,7 +97,7 @@ export const AddSong = (): JSX.Element => {
                 htmlFor="Song Name"
                 label="Song Name"
                 type="text"
-                error={error ?? ""}
+                error={error as string ?? ""}
                 onChange={(e) => setTitle(e.currentTarget.value)}
               />
             </div>
@@ -93,7 +109,7 @@ export const AddSong = (): JSX.Element => {
                 htmlFor="Singer Name"
                 label="Singer Name"
                 type="text"
-                error={error ?? ""}
+                error={error as string ?? ""}
                 onChange={(e) => setArtist(e.currentTarget.value)}
               />
             </div>
@@ -122,9 +138,10 @@ export const AddSong = (): JSX.Element => {
             <div className="w-full px-3">
               <div className="w-36 float-right mt-8">
                 <ButtonForm
-                 type="button"
-                 onClick={handleAddSong}
-                 BtnText="Edit Profile" />
+                  type="button"
+                  onClick={handleAddSong}
+                  BtnText="Add Song"
+                />
               </div>
             </div>
           </div>
