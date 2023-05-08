@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "./useAuthContext";
 
 type SigninProps = {
@@ -11,13 +10,12 @@ type SigninProps = {
 const baseUrl: string = import.meta.env.VITE_APP_API_URL;
 
 export const useSignin = () => {
+
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const { dispatch }: any = useAuthContext();
-
-  const navigate = useNavigate()
-  
   const signin = async ({ email, password }: SigninProps) => {
+
     setIsLoading(true);
     setError(null);
 
@@ -30,10 +28,9 @@ export const useSignin = () => {
         console.log(response);
         localStorage.setItem("user", response.data.email);
         localStorage.setItem("token", response.data.token);
-        navigate('/profile')
-
         dispatch({ type: "LOGIN", payload: response.data.user.email });
         setIsLoading(false);
+        window.location.href = "/profile";
       })
       .catch((err) => {
         setIsLoading(false);

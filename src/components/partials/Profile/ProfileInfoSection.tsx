@@ -1,5 +1,5 @@
 type Props = {
-  songs: number
+  songs: number | any
 }
 
 export const ProfileInfoSection = ({ songs }: Props): JSX.Element => {

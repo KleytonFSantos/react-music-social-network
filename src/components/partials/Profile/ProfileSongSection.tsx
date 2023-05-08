@@ -1,23 +1,34 @@
 import ReactJkMusicPlayer from "react-jinke-music-player";
 import { ButtonLink } from "../../global/ButtonLink";
+import { useGetSongs } from "../../../hooks/useGetSongs";
 import "react-jinke-music-player/assets/index.css";
 
-const audioLists = [
-  {
-    name: "Riot Van",
-    singer: "Arctic Monkeys",
-    cover: "login-bg.jpg",
-    musicSrc: "Arctic_Monkeys_Riot_Van.mp3",
-  },
-  {
-    name: "I Wanna Be Yours",
-    singer: "Arctic Monkeys",
-    cover: "login-bg.jpg",
-    musicSrc: "AUD-20220801-WA0085.mp3",
-  },
-];
+type Song = {
+  title: string;
+  artist: string;
+  cover: string;
+  song: string;
+}
+
+type AudioList = {
+  name: string;
+  singer: string;
+  cover: string;
+  musicSrc: string;
+}
 
 export const ProfileSongSection = (): JSX.Element => {
+  const { songs } = useGetSongs();
+
+  const audioLists: AudioList[] = songs.map((song: Song) => {
+    return {
+      name: song.title,
+      singer: song.artist,
+      cover: 'http://localhost:8000/' + song.cover,
+      musicSrc: 'http://localhost:8000/' + song.song
+    }
+  })
+
   return (
     <div className="mx-auto max-w-4xl py-4">
       <div className="font-bold text-gray-100">

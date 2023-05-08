@@ -3,6 +3,7 @@ import { ReactNode, useCallback, useContext, useEffect, useState } from "react";
 import { UserContext } from "../contexts/UserContext";
 
 type UserProps = {
+  authenticated: boolean;
   userId: number;
   email: string;
   lastName: string;
@@ -28,6 +29,7 @@ export const UseUserContext = () => {
 const baseUrl: string = import.meta.env.VITE_APP_API_URL;
 
 export const useUser = () => {
+  const [authenticated, setAuthenticated] = useState(false);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [userId, setUserId] = useState<ReactNode>(null);
@@ -45,7 +47,6 @@ export const useUser = () => {
     setIsLoading(true);
     setError(null);
     const token = localStorage.getItem("token");
-
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -64,22 +65,24 @@ export const useUser = () => {
         setSongs(response.data.songs);
         setDescription(response.data.description);
         dispatch({ type: "GET_USER", payload: response.data });
+        setAuthenticated(true);
         setIsLoading(false);
       })
       .catch((err) => {
-        setIsLoading(false);
-        setError(err.response.data.message);
+        // ...
       });
-  }, []);
+  }, [authenticated, dispatch]);
 
   useEffect(() => {
     (async () => {
       await getUser();
     })();
-  }, []);
+  }, [getUser, authenticated, userId, email, firstName, lastName, profileImage, city, state, description, songs]);
+  
 
   return {
     getUser,
+    authenticated,
     userId,
     email,
     firstName,

@@ -18,27 +18,26 @@ export const FileInput = ({ handleInputChange, label }: Props): JSX.Element => {
               mb-2
               "
       >
-        { label}
+        { label }
       </label>
       <div className="mb-3 w-full">
         <input
           className="
-                form-input
                 block
                 w-full
-                        px-3
-                        py-1.5
-                        text-base
-                        font-normal
-                        text-gray-700
-                        bg-white bg-clip-padding
-                        border border-solid border-gray-300
-                        rounded
-                        transition
-                        ease-in-out
-                        m-0
-                        focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
-                        "
+                px-3
+                py-1.5
+                text-base
+                font-normal
+                text-gray-700
+                bg-white bg-clip-padding
+                border border-solid border-gray-300
+                rounded
+                transition
+                ease-in-out
+                m-0
+                focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
+                "
           onChange={handleInputChange}
           id="image"
           type="file"

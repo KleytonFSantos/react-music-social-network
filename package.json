@@ -16,7 +16,8 @@
     "react-jinke-music-player": "^4.24.2",
     "react-modal": "^3.16.1",
     "react-router-dom": "^6.4.3",
-    "react-scripts": "^5.0.1"
+    "react-scripts": "^5.0.1",
+    "react-toastify": "^9.1.2"
   },
   "devDependencies": {
     "@types/node": "^18.11.9",

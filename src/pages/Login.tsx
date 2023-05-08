@@ -6,19 +6,22 @@ import { LinkForm } from "../components/global/LinkForm";
 import { LoadingComponent } from "../components/global/LoadingComponent";
 import { TextErrorForm } from "../components/global/TextErrorForm";
 import { useSignin } from "../hooks/useSignin";
+import { useNavigate } from "react-router-dom";
 
 export const Login = (): JSX.Element => {
+
   const [ email, setEmail ] = useState("")
   const [ password, setPassword ] = useState("")
-
   const { signin, isLoading, error } = useSignin()
-
+  const navigate = useNavigate();
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    signin({
+    await signin({
       email,
       password,
+    }).then(() => {
+      navigate('/profile');
     })
   } 
 

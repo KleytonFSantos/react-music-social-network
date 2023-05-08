@@ -8,6 +8,7 @@ import { LoadingComponent } from "../components/global/LoadingComponent";
 import { useUser } from "../hooks/useUserContext";
 import { Link } from "react-router-dom";
 import { useAddSong } from "../hooks/useAddSongs";
+import { toast } from "react-toastify";
 
 export const AddSong = (): JSX.Element => {
   const [title, setTitle] = useState("");
@@ -29,19 +30,36 @@ export const AddSong = (): JSX.Element => {
         setUploadImage(file as any);
         reader.readAsDataURL(e.target.files[0]);
       } else {
-        alert("Por favor, selecione um arquivo de imagem válido.");
-        
+        toast.error("Please insert a correct image file!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
       }
     }
   };
 
   const getUploadedSong = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
-      const file = e.target.files[0]
-      if(file.type.startsWith('audio/')) {
+      const file = e.target.files[0];
+      if (file.type.startsWith("audio/")) {
         setSongFile(e.target?.files[0]);
       } else {
-        alert("Por favor, selecione um arquivo de audio válido.");
+        toast.error("Please insert a correct audio file!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
       }
     }
   };
@@ -58,7 +76,7 @@ export const AddSong = (): JSX.Element => {
   if (isLoading) {
     return <LoadingComponent />;
   }
-  
+
   return (
     <>
       <Navbar />
@@ -97,7 +115,7 @@ export const AddSong = (): JSX.Element => {
                 htmlFor="Song Name"
                 label="Song Name"
                 type="text"
-                error={error as string ?? ""}
+                error={(error as string) ?? ""}
                 onChange={(e) => setTitle(e.currentTarget.value)}
               />
             </div>
@@ -109,7 +127,7 @@ export const AddSong = (): JSX.Element => {
                 htmlFor="Singer Name"
                 label="Singer Name"
                 type="text"
-                error={error as string ?? ""}
+                error={(error as string) ?? ""}
                 onChange={(e) => setArtist(e.currentTarget.value)}
               />
             </div>

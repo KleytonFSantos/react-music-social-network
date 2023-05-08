@@ -1,14 +1,14 @@
 import { useState } from "react";
-import { useAuthContext } from "../../../hooks/useAuthContext";
 import { useLogout } from "../../../hooks/useLogout";
 import { LoadingComponent } from "../../global/LoadingComponent";
+import { useUser } from "../../../hooks/useUserContext";
 
 
 export const Navbar = (): JSX.Element => {
   const [navbar, setNavbar] = useState(false);
   const { logout, isLoading, error } = useLogout()
-  const user = localStorage.getItem('user')!
-  
+  const token = localStorage.getItem('token')
+  const user = useUser();
   const handleLogoutButton = async () => {
     await logout();
   }
@@ -69,7 +69,7 @@ export const Navbar = (): JSX.Element => {
               navbar ? "block" : "hidden"
             }`}
           >
-            { user &&
+            { (user.authenticated && token) &&
               <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0">
               <li
                 className="
@@ -101,7 +101,7 @@ export const Navbar = (): JSX.Element => {
               </li>
             </ul>
             }
-            {!user &&
+            {(!user.authenticated || !token)&&
             <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0">
               <li
                 className="

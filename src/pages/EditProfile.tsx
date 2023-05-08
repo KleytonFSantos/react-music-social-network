@@ -40,7 +40,6 @@ export const EditProfile = (): JSX.Element => {
         setPreImage(reader.result?.toString() || "")
       );
       const file = e.target.files[0];
-      console.log(file);
       setProfileImage(file as any);
       reader.readAsDataURL(e.target.files[0]);
     }
